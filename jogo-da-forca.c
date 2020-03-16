@@ -2,44 +2,56 @@
 #include <stdlib.h>
 #include <string.h>
 
-int main(){
+void abertura() {
+  printf("/****************/\n");
+  printf("/ Jogo de Forca */\n");
+  printf("/****************/\n\n");
+}
 
-    char palavraSecreta[20];
-    sprintf(palavraSecreta, "MELANCIA");
+void chuta(char chutes[26], int tentativas) {
+  char chute;
+  printf("Qual letra? \n");
+  scanf(" %c", &chute);
 
-    int acertou = 0;
-    int enforcou = 0;
+  chutes[tentativas] = chute;
+}
 
-    char chutes[26];
-    int tentativas = 0;
+int main() {
 
-    do{
+  char palavraSecreta[20];
+  sprintf(palavraSecreta, "MELANCIA");
 
-        for (int i = 0; i < strlen(palavraSecreta); i++){
-           int achou = 0;
+  int acertou = 0;
+  int enforcou = 0;
 
-           for (int j = 0; j < tentativas; j++){
-               if(chutes[j] == palavraSecreta[i]){
-                    achou = 1;
-                    break;
-               } 
-           }
+  char chutes[26];
+  int tentativas = 0;
 
-           if(achou){
-               printf("%c ", palavraSecreta[i]);
-           }else{
-               printf("_ ");
-           }
+  do {
+    // imprime a palavra secreta
+    for (int i = 0; i < strlen(palavraSecreta); i++) {
+      int achou = 0;
+
+      // verifica se a letra já foi chutada
+      for (int j = 0; j < tentativas; j++) {
+        if (chutes[j] == palavraSecreta[i]) {
+          achou = 1;
+          break;
         }
-        printf("\n");
+      }
 
-        char chute;
-        printf("Qual letra? \n");
-        scanf(" %c", &chute);
+      if (achou) {
+        printf("%c ", palavraSecreta[i]);
+      } else {
+        printf("_ ");
+      }
+    }
+    printf("\n");
 
-        chutes[tentativas] = chute;
-        tentativas++;
-    }while(!acertou && !enforcou);
+    // captura o próximo chute
+    chuta(chutes, tentativas);
+    tentativas++;
+  } while (!acertou && !enforcou);
 
-    return 0;
+  return 0;
 }
